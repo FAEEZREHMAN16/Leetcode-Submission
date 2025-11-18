@@ -1,0 +1,23 @@
+// Note: simplified combinational backtracking with dynamic arrays.
+// For full LeetCode style return-of-arrays you'd wrap results in arrays-of-arrays.
+// Here we print combinations to stdout for clarity.
+#include <stdio.h>
+
+void dfsComb(int* cand, int candSize, int target, int start, int* path, int pathLen){
+    if(target == 0){
+        printf("[");
+        for(int i=0;i<pathLen;i++){ if(i) printf(","); printf("%d", path[i]); }
+        printf("]\n");
+        return;
+    }
+    if(target < 0) return;
+    for(int i=start;i<candSize;i++){
+        path[pathLen] = cand[i];
+        dfsComb(cand, candSize, target - cand[i], i, path, pathLen+1);
+    }
+}
+
+void combinationSumPrint(int* candidates, int candidatesSize, int target){
+    int path[100]; // assume depth <=100
+    dfsComb(candidates, candidatesSize, target, 0, path, 0);
+}
