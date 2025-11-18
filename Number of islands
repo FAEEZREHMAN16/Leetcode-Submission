@@ -1,0 +1,28 @@
+#include <stdlib.h>
+
+// grid is char** with rows = gridSize and columns = gridColSize (pointer array).
+void dfsMark(char** grid, int r, int c, int R, int C){
+    if(r < 0 || c < 0 || r >= R || c >= C) return;
+    if(grid[r][c] != '1') return;
+    grid[r][c] = '0';
+    dfsMark(grid, r+1, c, R, C);
+    dfsMark(grid, r-1, c, R, C);
+    dfsMark(grid, r, c+1, R, C);
+    dfsMark(grid, r, c-1, R, C);
+}
+
+// gridRowSizes not used since we assume rectangular grid; this matches typical LeetCode signature.
+int numIslands(char** grid, int gridSize, int* gridColSize){
+    if(gridSize == 0) return 0;
+    int R = gridSize, C = *gridColSize;
+    int count = 0;
+    for(int i=0;i<R;i++){
+        for(int j=0;j<C;j++){
+            if(grid[i][j] == '1'){
+                count++;
+                dfsMark(grid, i, j, R, C);
+            }
+        }
+    }
+    return count;
+}
