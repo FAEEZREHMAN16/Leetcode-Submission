@@ -1,0 +1,23 @@
+#include <string.h>
+#include <stdlib.h>
+
+char* longestPalindrome(char *s){
+    int n = strlen(s);
+    if(n==0) return strdup("");
+    int bestL = 0, bestR = 0;
+    for(int i=0;i<n;i++){
+        // odd
+        int l=i, r=i;
+        while(l>=0 && r<n && s[l]==s[r]) { l--; r++; }
+        if(r-l-1 > bestR-bestL){ bestL = l+1; bestR = r-1; }
+        // even
+        l=i; r=i+1;
+        while(l>=0 && r<n && s[l]==s[r]) { l--; r++; }
+        if(r-l-1 > bestR-bestL){ bestL = l+1; bestR = r-1; }
+    }
+    int len = bestR - bestL + 1;
+    char *res = malloc(len+1);
+    memcpy(res, s+bestL, len);
+    res[len] = '\0';
+    return res;
+}
