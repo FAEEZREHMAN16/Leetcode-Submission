@@ -1,0 +1,17 @@
+#include <stdlib.h>
+
+struct TreeNode { int val; struct TreeNode *left, *right; };
+
+// For simplicity: this prints inorder to stdout
+void inorderTraversalPrint(struct TreeNode* root){
+    struct TreeNode** stack = malloc(1000 * sizeof(struct TreeNode*));
+    int top = 0;
+    struct TreeNode* cur = root;
+    while(cur || top){
+        while(cur){ stack[top++] = cur; cur = cur->left; }
+        cur = stack[--top];
+        printf("%d ", cur->val);
+        cur = cur->right;
+    }
+    free(stack);
+}
