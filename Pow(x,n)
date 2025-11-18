@@ -1,0 +1,14 @@
+double myPow(double x, long long n){
+    if(n == 0) return 1.0;
+    long long exp = n;
+    int neg = 0;
+    if(exp < 0){ neg = 1; exp = -exp; }
+    double res = 1.0;
+    double base = x;
+    while(exp){
+        if(exp & 1) res *= base;
+        base *= base;
+        exp >>= 1;
+    }
+    return neg ? 1.0 / res : res;
+}
